@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <pre>{{ article.text }}</pre>
+    <h4>{{ article.user.first_name }}</h4>
+
+    <h3>Комментарии </h3>
+    <hr>
+    {% for com in comment %}
+        <h4> {{ com.name }}</h4>
+        <h6>{{ com.comment }}</h6>
+        <p>{{ com.created_on|timesince }} ago</p>
+        <br>
+
+    {% endfor %}
+
+    <hr>
+{#    action="{% url 'article' %}"#}
+    <form  method="post">
+        {%  csrf_token %}
+        Имя пользователя:
+        <p>{{ form.name }}</p>
+        Комментарий:
+        <p>{{ form.comment }}</p>
+
+        <button type="submit">Добавить</button>
+    </form>
+{% endblock %}
